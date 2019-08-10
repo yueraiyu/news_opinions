@@ -1,6 +1,6 @@
 from flask import Flask
 from conf import dev_conf
-from utils import exception_handler
+from app.utils import exception_handler
 
 
 def create_app():
