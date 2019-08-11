@@ -129,7 +129,7 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Django stuff
 *.log
 local_settings.py
 db.sqlite3
@@ -199,3 +199,7 @@ dmypy.json
 
 # conf
 conf/*
+
+# logs
+logs/*
+

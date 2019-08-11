@@ -4,10 +4,11 @@ from app.utils import exception_handler
 
 
 def create_app():
-    from . import db, models, routes, services
+    from . import utils, db, models, routes, services
     app = Flask(__name__)
     # load config
     app.config.from_object(dev_conf)
+    utils.init_app(app)
     db.init_app(app)
     models.init_app(app)
     services.init_app(app)
