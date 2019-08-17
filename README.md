@@ -52,4 +52,12 @@
    * `frontend`:前端代码
 2. 项目启动说明
    * `backend`
-   * `frontend`
+     * `step1`:进入后端代码，执行命令`cd backend`
+     * `step2`:创建虚拟环境，执行命令`python -m venv venv `
+     * `step3`:进入虚拟环境，执行命令`source venv/bin/activate `
+     * `step4`:安装相关依赖，执行命令`pip install -r requirements.txt `
+     * `step5`:运行后端服务，执行命令`flask run`
+   * `frontend`:确保安装了`node` 
+     * `step1`:`cd frontend`
+     * `step2`:`npm instal`
+     * `step3`:`npm run dev` or `npm run build`
