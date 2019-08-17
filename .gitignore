@@ -198,8 +198,7 @@ dmypy.json
 .pyre/
 
 # conf
-conf/*
+config.py
 
 # logs
 logs/*
-

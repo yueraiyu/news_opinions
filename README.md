@@ -4,7 +4,7 @@
 1. 初始化工程
 
 2. 项目模块化，不同领域模型放在不同包中
-    
+  
     * `conf` : 存放项目配置文件相关，现在只是通过`flask`加载了，具体还未设置
     * `app/db`:存放数据库相关操作，可能涉及`CRUD`的简单操作，也可能涉及查询结果集到`model`的绑定
     * `app/models`:存放实体，比如`User`、`News`、`Opinions`等
@@ -37,3 +37,19 @@
    * 用github的wiki，添加新功能和设计
    * 用github的issues，添加功能bug
 2. 项目统一提交到develop分支，每个人在自己本地环境创建分支订阅develop，正式且无任何bug代码才合并到master分支
+
+### 2019/08/17
+
+项目重构，针对`python` `flask` `Jinja2` 模版语言需要服务器渲染，页面展示效果不好，而且之前项目结构不太灵活，将项目改为前后端分离，引入`Vue`。
+
+1. 项目结构说明
+   * `backend`:后端代码
+     * `app`
+       * `api`:路由请求
+       * `database`:数据库模型
+       * `models`:算法模型
+       * `utils:部分工具`
+   * `frontend`:前端代码
+2. 项目启动说明
+   * `backend`
+   * `frontend`
