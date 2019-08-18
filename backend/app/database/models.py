@@ -4,9 +4,10 @@ from flask import url_for
 
 class Pagination(object):
     @staticmethod
-    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
+    def to_collection_dict(query, search_value, page, per_page, endpoint, **kwargs):
         resources = query.paginate(page, per_page, False)
         data = {
+            'search_value': search_value,
             'items': [item.to_dict() for item in resources.items],
             '_meta': {
                 'page': page,

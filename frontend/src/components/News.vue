@@ -30,9 +30,9 @@
         <!-- News Entries Column -->
         <div class="col-md-8">
 
-          <h1 class="my-4"> 实时要闻
-            <small>  </small>
-          </h1>
+<!--          <h1 class="my-4"> 实时要闻-->
+<!--            <small>  </small>-->
+<!--          </h1>-->
 
           <!-- News Post -->
           <div v-if="pages" class="card mb-4 border-0">
@@ -54,7 +54,7 @@
           <nav v-if="pages" aria-label="Page Navigation" class="g-mb-60">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <router-link v-bind:to="{ name: 'Home', query: { page: pages._meta.page - 1, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1__item--disabled': pages._meta.page == 1}" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-21" aria-label="Previous">
+                <router-link v-bind:to="{ name: 'News', query: { search_value: search_value, page: pages._meta.page - 1, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1__item--disabled': pages._meta.page == 1}" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-21" aria-label="Previous">
                   <span aria-hidden="true">
                     <i class="fa fa-angle-left"></i>
                   </span>
@@ -63,23 +63,23 @@
               </li>
 
               <li v-if="page != 'NaN'" v-for="(page, index) in iter_pages" v-bind:key="index" class="list-inline-item g-hidden-sm-down">
-                <router-link v-bind:to="{ name: 'Home', query: { page: page, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1-1--active': $route.query.page == page || (!$route.query.page && page == 1)}" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-19">{{ page }}</router-link>
+                <router-link v-bind:to="{ name: 'News', query: { search_value: search_value, page: page, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1-1--active': $route.query.page == page || (!$route.query.page && page == 1)}" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-19">{{ page }}</router-link>
               </li>
               <li v-else class="list-inline-item g-hidden-sm-down">
                 <span class="g-pa-12-19">...</span>
               </li>
 
               <li class="list-inline-item">
-                <router-link v-bind:to="{ name: 'Home', query: { page: pages._meta.page + 1, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1__item--disabled': pages._meta.page == pages._meta.total_pages }" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-21" aria-label="Next">
+                <router-link v-bind:to="{ name: 'News', query: { search_value: search_value, page: pages._meta.page + 1, per_page: pages._meta.per_page }}" v-bind:class="{'u-pagination-v1__item--disabled': pages._meta.page == pages._meta.total_pages }" class="u-pagination-v1__item u-pagination-v1-1 g-rounded-50 g-pa-12-21" aria-label="Next">
                   <span aria-hidden="true">
                     <i class="fa fa-angle-right"></i>
                   </span>
                   <span class="sr-only">Next</span>
                 </router-link>
               </li>
-              <li class="list-inline-item float-right">
-                <span class="u-pagination-v1__item-info g-pa-12-19">Page {{ pages._meta.page }} of {{ pages._meta.total_pages }}</span>
-              </li>
+<!--              <li class="list-inline-item float-right">-->
+<!--                <span class="u-pagination-v1__item-info g-pa-12-19">Page {{ pages._meta.page }} of {{ pages._meta.total_pages }}</span>-->
+<!--              </li>-->
             </ul>
           </nav>
 
@@ -93,9 +93,9 @@
             <h5 class="card-header">Search</h5>
             <div class="card-body">
               <div class="input-group">
-                  <input type="text" name="search_key" class="form-control" placeholder="Search for...">
+                  <input type="text" v-model="search_value" class="form-control" placeholder="Search for...">
                   <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="submit">Go!</button>
+                      <router-link v-bind:to="{ name: 'News', query: { search_value: search_value }}" class="btn btn-secondary">GO!</router-link>
                   </span>
               </div>
             </div>
@@ -167,13 +167,15 @@
       name: "News",
       data() {
         return {
-          pages: ''
+          pages: '',
+          search_value: ''
         }
       },
       methods: {
         search () {
           let page = 1
           let per_page = 10
+
           if (typeof this.$route.query.page != 'undefined') {
             page = this.$route.query.page
           }
@@ -181,13 +183,23 @@
             per_page = this.$route.query.per_page
           }
 
-          const path = `/api/news?page=${page}&per_page=${per_page}`
+          let path = `/api/news?page=${page}&per_page=${per_page}`
+
+          let search_value = undefined
+          if (typeof this.$route.query.search_value != 'undefined'){
+            search_value = this.$route.query.search_value
+            path += `&search_value=${search_value}`
+          }
+
           this.$axios.get(path)
             .then((response) => {
               // handle success
               this.pages = response.data
+              this.search_value = this.pages.search_value
+              console.log(this.search_value)
+
               // 构建分页导航，当前页左、右两边各显示2页，比如  1, 2, ... 7, 8, 9, 10, 11 ... 30, 31
-              let arr = [1, 2, this.pages._meta.page-2, this.pages._meta.page-1, this.pages._meta.page, this.pages._meta.page+1, this.pages._meta.page+2, this.pages._meta.total_pages-1, this.pages._meta.total_pages]
+              let arr = [1, this.pages._meta.page-1, this.pages._meta.page, this.pages._meta.page+1, this.pages._meta.total_pages-1, this.pages._meta.total_pages]
               // 小于1，或大于最大页数的都是非法的，要去除
               arr = arr.filter(item => item > 0 && item <= this.pages._meta.total_pages)
               // 去除重复项
@@ -212,9 +224,8 @@
       },
       // 当查询参数 page 或 per_page 变化后重新加载数据
       beforeRouteUpdate (to, from, next) {
-        console.info(to + " " + from + " " + next)
-        this.search()
         next()
+        this.search()
       }
   }
 </script>

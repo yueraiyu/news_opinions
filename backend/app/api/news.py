@@ -8,7 +8,9 @@ def search():
     '''返回新闻集合，分页'''
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = News.to_collection_dict(News.query, page, per_page, 'api.search')
+    search_value = request.args.get('search_value', '', type=str)
+    data = News.to_collection_dict(News.query.filter(News.content.like("%" + search_value + "%")),
+                                   search_value, page, per_page, 'api.search')
     return jsonify(data)
 
 
