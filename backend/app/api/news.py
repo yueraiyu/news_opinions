@@ -17,4 +17,10 @@ def search():
 @bp.route('/news/<int:id>', methods=['GET'])
 def content(id):
     '''返回一条新闻'''
-    return jsonify(News.query.get_or_404(id).to_dict())
+    return jsonify(News.query.get_or_404(id).to_detail())
+
+
+@bp.route('/news/analyze/<int:id>', methods=['GET'])
+def analyze(id):
+    '''返回一条新闻'''
+    return jsonify(News.query.get_or_404(id).to_detail())

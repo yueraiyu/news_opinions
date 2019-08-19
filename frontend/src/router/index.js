@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import NewsContent from '@/components/NewsContent'
 import News from '@/components/News'
 
 Vue.use(Router)
@@ -10,6 +11,11 @@ const router = new Router({
       path: '/',
       name: 'News',
       component: News
+    },
+    {
+      path: '/news/:id',
+      name: 'NewsContent',
+      component: NewsContent
     }
   ]
 })
