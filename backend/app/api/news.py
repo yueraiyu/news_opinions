@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from app.api import bp
 from app.database.models import News
+from flask import current_app
 
 
 @bp.route('/news', methods=['GET'])
@@ -22,5 +23,49 @@ def content(id):
 
 @bp.route('/news/analyze/<int:id>', methods=['GET'])
 def analyze(id):
-    '''返回一条新闻'''
-    return jsonify(News.query.get_or_404(id).to_detail())
+    '''根据新闻ID解析'''
+    news = News.query.get_or_404(id)
+    current_app.logger.info("analyze news content {%s}", news.content)
+
+    # todo 调用正式解析函数获得正式返回
+    opinions = [
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
+        ]
+
+    resp = {
+        "news": news.to_detail(),
+        "opinions": opinions
+    }
+    return jsonify(resp)
+
+
+@bp.route('/news/analyze', methods=['POST'])
+def analyze_txt():
+    '''根据文本解析'''
+    content = request.args.get('content', '', type=str)
+    current_app.logger.info("analyze content {%s}", content)
+
+    # todo 调用正式解析函数获得正式返回
+    opinions = [
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
+    ]
+
+    resp = {
+        "news": content,
+        "opinions": opinions
+    }
+    return jsonify(resp)

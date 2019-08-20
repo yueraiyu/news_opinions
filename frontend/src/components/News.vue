@@ -19,7 +19,7 @@
               <div class="card-body">
                 <h2 class="card-title">{{ news.title }}</h2>
                 <p class="card-text text-left">{{ news.content }}</p>
-                <router-link v-bind:to="{ name: 'NewsContent', params: { id: news.id }}" class="btn btn-primary" style="float: right;"> 分析 &rarr;</router-link>
+                <router-link v-bind:to="{ name: 'NewsAnalyze', params: { id: news.id }}" class="btn btn-primary" style="float: right;"> 分析 &rarr;</router-link>
               </div>
               <div class="card-footer text-left">
                 <router-link v-bind:to="{ name: 'NewsContent', params: { id: news.id }}">{{ news.source + " > " + news.author + " : " + news.title }}</router-link>
