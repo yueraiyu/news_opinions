@@ -11,11 +11,13 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
                 <router-link v-bind:to="{ name: 'News'}" class="nav-link"> 论点
-                  <span class="sr-only">(current)</span>
+<!--                  <span class="sr-only">(current)</span>-->
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link v-bind:to="{ name: 'NewsAnalyzeTxt'}" class="nav-link">分析</router-link>
+                <router-link v-bind:to="{ name: 'NewsAnalyzeTxt'}" class="nav-link">分析
+                  <span class="sr-only">(current)</span>
+                </router-link>
               </li>
             </ul>
           </div>
@@ -24,12 +26,12 @@
 
       <div class="container">
         <!--  输入文本  -->
-        <form>
-          <div class="form-group">
-            <label for="analyze_content">解析内容</label>
-            <textarea class="form-control is-valid" id="analyze_content" v-bind="content" v-bind:readonly="isReadOnly" rows="15" placeholder="please enter ..." required></textarea>
+        <form @submit.prevent="onSubmit">
+          <div class="form-group text-left">
+            <label for="analyze_content" class="text-left">解析内容 : </label>
+            <textarea class="form-control is-valid" id="analyze_content" v-model="content"  v-bind:readonly="isReadOnly" rows="15" placeholder="please enter ..." required></textarea>
           </div>
-          <router-link type="submit" class="btn btn-primary">解析</router-link>
+          <button type="submit" class="btn btn-primary" v-bind:hidden="isReadOnly">解析</button>
         </form>
 
         <!--  解析详情  -->
@@ -64,7 +66,7 @@
             }
           },
         methods: {
-          analyze(){
+          onSubmit(e){
             let path = `/api/news/analyze`
             let data = {content: this.content}
               this.$axios.post(path, data)

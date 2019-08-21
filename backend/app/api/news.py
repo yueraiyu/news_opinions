@@ -49,7 +49,8 @@ def analyze(id):
 @bp.route('/news/analyze', methods=['POST'])
 def analyze_txt():
     '''根据文本解析'''
-    content = request.args.get('content', '', type=str)
+    data = request.get_json()
+    content = data.get('content', None)
     current_app.logger.info("analyze content {%s}", content)
 
     # todo 调用正式解析函数获得正式返回
@@ -65,7 +66,7 @@ def analyze_txt():
     ]
 
     resp = {
-        "news": content,
+        "content": content,
         "opinions": opinions
     }
     return jsonify(resp)

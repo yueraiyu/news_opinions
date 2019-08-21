@@ -11,11 +11,13 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
                 <router-link v-bind:to="{ name: 'News'}" class="nav-link"> 论点
-                  <span class="sr-only">(current)</span>
+<!--                  <span class="sr-only">(current)</span>-->
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link v-bind:to="{ name: 'NewsAnalyzeTxt'}" class="nav-link">分析</router-link>
+                <router-link v-bind:to="{ name: 'NewsAnalyzeTxt'}" class="nav-link">分析
+                  <span class="sr-only">(current)</span>
+                </router-link>
               </li>
             </ul>
           </div>
