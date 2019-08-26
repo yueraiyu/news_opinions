@@ -54,6 +54,19 @@ class News(Pagination, db.Model):
 
         return data
 
+    def to_detail(self):
+        data = {
+            'id': self.id,
+            'author': self.author,
+            'source': self.source,
+            'content': self.content,
+            'feature': self.feature,
+            'title': self.title,
+            'url': self.url
+        }
+
+        return data
+
     def from_dict(self, data):
         for field in data.item():
             setattr(self, field, data[field])

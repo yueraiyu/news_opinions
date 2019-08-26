@@ -1,27 +1,5 @@
 <template>
   <div>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#"> 问就是全栈 - 新闻分析 </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"> 论点
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">分析</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
     <!-- Page Content -->
     <div class="container">
 
@@ -41,10 +19,10 @@
               <div class="card-body">
                 <h2 class="card-title">{{ news.title }}</h2>
                 <p class="card-text text-left">{{ news.content }}</p>
-                <a href="#" class="btn btn-primary" style="float: right;"> 分析 &rarr;</a>
+                <router-link v-bind:to="{ name: 'NewsAnalyze', params: { id: news.id }}" class="btn btn-primary" style="float: right;"> 分析 &rarr;</router-link>
               </div>
               <div class="card-footer text-left">
-                <a href="#">{{ news.source + " > " + news.author + " : " + news.title }}</a>
+                <router-link v-bind:to="{ name: 'NewsContent', params: { id: news.id }}">{{ news.source + " > " + news.author + " : " + news.title }}</router-link>
               </div>
             </div>
           </div>
@@ -102,47 +80,47 @@
           </div>
 
           <!-- Categories Widget -->
-          <div class="card my-4">
-            <h5 class="card-header">Categories</h5>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">Web Design</a>
-                    </li>
-                    <li>
-                      <a href="#">HTML</a>
-                    </li>
-                    <li>
-                      <a href="#">Freebies</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">JavaScript</a>
-                    </li>
-                    <li>
-                      <a href="#">CSS</a>
-                    </li>
-                    <li>
-                      <a href="#">Tutorials</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--          <div class="card my-4">-->
+<!--            <h5 class="card-header">Categories</h5>-->
+<!--            <div class="card-body">-->
+<!--              <div class="row">-->
+<!--                <div class="col-lg-6">-->
+<!--                  <ul class="list-unstyled mb-0">-->
+<!--                    <li>-->
+<!--                      <a href="#">Web Design</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                      <a href="#">HTML</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                      <a href="#">Freebies</a>-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--                <div class="col-lg-6">-->
+<!--                  <ul class="list-unstyled mb-0">-->
+<!--                    <li>-->
+<!--                      <a href="#">JavaScript</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                      <a href="#">CSS</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                      <a href="#">Tutorials</a>-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
 
           <!-- Side Widget -->
-          <div class="card my-4">
-            <h5 class="card-header"> Side Widget </h5>
-            <div class="card-body">
-              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-            </div>
-          </div>
+<!--          <div class="card my-4">-->
+<!--            <h5 class="card-header"> Side Widget </h5>-->
+<!--            <div class="card-body">-->
+<!--              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!-->
+<!--            </div>-->
+<!--          </div>-->
 
         </div>
 
@@ -150,14 +128,6 @@
       <!-- /.row -->
     </div>
     <!-- /.container -->
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; 问就是全栈 - 观点分析 2019</p>
-      </div>
-      <!-- /.container -->
-    </footer>
   </div>
 </template>
 
@@ -215,7 +185,7 @@
             })
             .catch((error) => {
               // handle error
-              console.log(error.response.data)
+              console.log(error.response)
             })
         }
       },

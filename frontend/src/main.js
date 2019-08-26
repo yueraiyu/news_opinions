@@ -14,6 +14,7 @@ import './assets/icon-awesome/css/font-awesome.min.css'
 // 自定义 css 文件
 import './assets/core.css'
 import './assets/custom.css'
+import './assets/blog-post.css'
 
 Vue.config.productionTip = false
 // 将 $axios 挂载到 prototype 上，在组件中可以直接使用 this.$axios 访问

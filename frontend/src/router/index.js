@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import NewsContent from '@/components/NewsContent'
+import NewsAnalyze from '@/components/NewsAnalyze'
+import NewsAnalyzeTxt from '@/components/NewsAnalyzeTxt'
 import News from '@/components/News'
 
 Vue.use(Router)
@@ -10,6 +13,21 @@ const router = new Router({
       path: '/',
       name: 'News',
       component: News
+    },
+    {
+      path: '/news/:id',
+      name: 'NewsContent',
+      component: NewsContent
+    },
+    {
+      path: '/news/analyze/:id',
+      name: 'NewsAnalyze',
+      component: NewsAnalyze
+    },
+    {
+      path: '/news/analyze/',
+      name: 'NewsAnalyzeTxt',
+      component: NewsAnalyzeTxt
     }
   ]
 })
