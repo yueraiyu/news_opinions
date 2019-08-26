@@ -48,12 +48,12 @@ def load_file(filename):
             return string
 
 
-if __name__ == '__main__':
-    # save_to_file()
-
-    # print(get_say())
-
-    # string = load_file('similar_word_to_say.txt')
-    # print(string, '\n', len(string))
-    news_model = Word2Vec.load("../word2vec_model/news_content_wv")
-    print(news_model.wv.most_similar('说', topn=20))
+# if __name__ == '__main__':
+#     # save_to_file()
+#
+#     # print(get_say())
+#
+#     # string = load_file('similar_word_to_say.txt')
+#     # print(string, '\n', len(string))
+#     news_model = Word2Vec.load("../word2vec_model/news_content_wv")
+#     print(news_model.wv.most_similar('说', topn=20))

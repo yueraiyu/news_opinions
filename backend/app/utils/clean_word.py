@@ -33,8 +33,8 @@ def clean_word(string):
     return effient_cut(token(string))
 
 
-if __name__ == '__main__':
-    string = '  ' \
-             '\n这是一个测试\\n\u3000'
-    cleaned = clean_word((string))
-    print(cleaned,type(cleaned))
+# if __name__ == '__main__':
+#     string = '  ' \
+#              '\n这是一个测试\\n\u3000'
+#     cleaned = clean_word((string))
+#     print(cleaned,type(cleaned))
