@@ -2,7 +2,7 @@ from flask import request, jsonify
 from app.api import bp
 from app.database.models import News
 from flask import current_app
-
+from app.utils.extract_algorithm import present_data
 
 @bp.route('/news', methods=['GET'])
 def search():
@@ -28,17 +28,17 @@ def analyze(id):
     current_app.logger.info("analyze news content {%s}", news.content)
 
     # todo 调用正式解析函数获得正式返回
-    opinions = [
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-            {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
-        ]
-
+    # opinions = [
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
+    #     ]
+    opinions = present_data(news.content)
     resp = {
         "news": news.to_detail(),
         "opinions": opinions
@@ -49,24 +49,23 @@ def analyze(id):
 @bp.route('/news/analyze', methods=['POST'])
 def analyze_txt():
     '''根据文本解析'''
-    data = request.get_json()
-    content = data.get('content', None)
+    content = request.args.get('content', '', type=str)
     current_app.logger.info("analyze content {%s}", content)
 
     # todo 调用正式解析函数获得正式返回
-    opinions = [
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-        {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
-    ]
-
+    # opinions = [
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
+    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
+    # ]
+    opinions = present_data(content)
     resp = {
-        "content": content,
+        "news": content,
         "opinions": opinions
     }
     return jsonify(resp)
