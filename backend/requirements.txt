@@ -13,7 +13,7 @@ Flask-HTTPAuth==3.3.0
 Flask-Migrate==2.5.2
 Flask-SQLAlchemy==2.4.0
 gensim==3.8.0
-httpie==1.0.2
+httpie==1.0.3
 idna==2.8
 itsdangerous==1.1.0
 jieba==0.39
