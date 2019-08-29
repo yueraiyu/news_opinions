@@ -9,7 +9,7 @@ basepath = os.path.abspath('.')
 sys.path.append(basepath)
 path = os.getcwd()
 
-LTP_DATA_DIR = path + '\\app\\model\\' # ltp模型目录的路径
+LTP_DATA_DIR = os.path.join(path, "app", "model")  # ltp模型目录的路径
 cws_model_path = os.path.join(LTP_DATA_DIR, 'cws.model')
 pos_model_path = os.path.join(LTP_DATA_DIR, 'pos.model')  # 词性标注模型路径，模型名称为`pos.model`
 ner_model_path = os.path.join(LTP_DATA_DIR, 'ner.model')  # 命名实体识别模型路径，模型名称为`pos.model`
@@ -127,8 +127,8 @@ def present_data(string):
     @ output: extractor result including: person, say_word, comment
     '''
     # path = './similar_word/'
-    path = basepath + '\\app\\utils\\similar_word\\'
-    say_word = load_file(path + 'similar_word_to_say.txt')
+    path = os.path.join(basepath, "app", "utils", "similar_word")
+    say_word = load_file(os.path.join(path, 'similar_word_to_say.txt'))
     sents = cut_sentence(string)
     res = []
     person_comment = extract_news(sents, say_word)

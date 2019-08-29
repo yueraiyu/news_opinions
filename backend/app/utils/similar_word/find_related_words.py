@@ -42,7 +42,7 @@ def load_file(filename):
     :return: string -> say word
     '''
     if filename:
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf-8', errors='ignore') as f:
             string = f.readlines()
             string = string[0].split(',')
             return string

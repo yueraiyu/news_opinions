@@ -49,7 +49,8 @@ def analyze(id):
 @bp.route('/news/analyze', methods=['POST'])
 def analyze_txt():
     '''根据文本解析'''
-    content = request.args.get('content', '', type=str)
+    data = request.get_json()
+    content = data.get('content', None)
     current_app.logger.info("analyze content {%s}", content)
 
     # todo 调用正式解析函数获得正式返回
@@ -64,6 +65,7 @@ def analyze_txt():
     #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
     # ]
     opinions = present_data(content)
+    current_app.logger.info("analyze opinions {%s}", opinions)
     resp = {
         "news": content,
         "opinions": opinions
