@@ -9,7 +9,7 @@ basepath = os.path.abspath('.')
 sys.path.append(basepath)
 path = os.getcwd()
 
-LTP_DATA_DIR = os.path.join(path, "app", "model")  # ltp模型目录的路径
+LTP_DATA_DIR = os.path.join(basepath, "app", "utils", "model")  # ltp模型目录的路径
 cws_model_path = os.path.join(LTP_DATA_DIR, 'cws.model')
 pos_model_path = os.path.join(LTP_DATA_DIR, 'pos.model')  # 词性标注模型路径，模型名称为`pos.model`
 ner_model_path = os.path.join(LTP_DATA_DIR, 'ner.model')  # 命名实体识别模型路径，模型名称为`pos.model`
