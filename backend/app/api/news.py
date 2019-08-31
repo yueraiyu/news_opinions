@@ -26,19 +26,8 @@ def analyze(id):
     '''根据新闻ID解析'''
     news = News.query.get_or_404(id)
     current_app.logger.info("analyze news content {%s}", news.content)
-
-    # todo 调用正式解析函数获得正式返回
-    # opinions = [
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #         {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
-    #     ]
     opinions = present_data(news.content)
+    current_app.logger.info("analyze opinions {%s}", opinions)
     resp = {
         "news": news.to_detail(),
         "opinions": opinions
@@ -52,18 +41,6 @@ def analyze_txt():
     data = request.get_json()
     content = data.get('content', None)
     current_app.logger.info("analyze content {%s}", content)
-
-    # todo 调用正式解析函数获得正式返回
-    # opinions = [
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"},
-    #     {"name": "张三", "action": "说", "words": "可是当减肥了看时间的"}
-    # ]
     opinions = present_data(content)
     current_app.logger.info("analyze opinions {%s}", opinions)
     resp = {

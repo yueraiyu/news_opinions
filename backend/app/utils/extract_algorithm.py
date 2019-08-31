@@ -1,19 +1,9 @@
 # -*- coding:utf-8 -*-
-import os
 from app.utils.clean_word import clean_word
 from app.utils.similar_word.find_related_words import load_file
-from pyltp import Segmentor, SentenceSplitter, Postagger, NamedEntityRecognizer, Parser
+from pyltp import SentenceSplitter
+from app import postagger, recognizer, parser, similar_word_path
 
-import sys
-basepath = os.path.abspath('.')
-sys.path.append(basepath)
-path = os.getcwd()
-
-LTP_DATA_DIR = os.path.join(basepath, "app", "utils", "model")  # ltp模型目录的路径
-cws_model_path = os.path.join(LTP_DATA_DIR, 'cws.model')
-pos_model_path = os.path.join(LTP_DATA_DIR, 'pos.model')  # 词性标注模型路径，模型名称为`pos.model`
-ner_model_path = os.path.join(LTP_DATA_DIR, 'ner.model')  # 命名实体识别模型路径，模型名称为`pos.model`
-par_model_path = os.path.join(LTP_DATA_DIR, 'parser.model')  # 依存句法分析模型路径，模型名称为`parser.model`
 
 def cut_sentence(string):
     '''
@@ -26,6 +16,7 @@ def cut_sentence(string):
 
     return sentences
 
+
 def cut_word(sentence):
     '''
     分词函数
@@ -37,6 +28,7 @@ def cut_word(sentence):
         words += clean_word(sents).split(' ')
     return words
 
+
 def word_pos(sents):
     '''
     词性标注函数
@@ -44,13 +36,10 @@ def word_pos(sents):
     @切词在函数内进行
     @output: [postag1, postag2, ....]
     '''
-    postagger = Postagger()
-    postagger.load(pos_model_path)
 
     words = cut_word(sents)
     postag = postagger.postag(words)
 
-    postagger.release()
     return list(postag)
 
 
@@ -61,11 +50,8 @@ def ner(words, pos):
     @ output: Name Entity Recognizer: List
     @ explanation: Nh:人名   Ni:机构名 Ns:地名 S:这个词单独构成一个NE
     '''
-    recognizer = NamedEntityRecognizer()
-    recognizer.load(ner_model_path)
 
     netags = recognizer.recognize(words, pos)
-    recognizer.release()
     return list(netags)
 
 def dependency_parsing(words, pos):
@@ -76,11 +62,8 @@ def dependency_parsing(words, pos):
       arc.head 表示依存弧的父节点词的索引，arc.relation 表示依存弧的关系。
       pyltp的算法只有一个root节点
     '''
-    parser = Parser()
-    parser.load(par_model_path)
 
     arcs = parser.parse(words, pos)
-    parser.release()
     return [(arc.head, arc.relation) for arc in arcs]
 
 def extract_news(cut_sents, say_word):
@@ -126,20 +109,19 @@ def present_data(string):
     @ input : string ---> text
     @ output: extractor result including: person, say_word, comment
     '''
-    # path = './similar_word/'
-    path = os.path.join(basepath, "app", "utils", "similar_word")
-    say_word = load_file(os.path.join(path, 'similar_word_to_say.txt'))
+
+    say_word = load_file(similar_word_path)
+
     sents = cut_sentence(string)
     res = []
     person_comment = extract_news(sents, say_word)
     for r in person_comment:
-        dic1 = {}
-        dic1['name'] = r[1]
-        dic1['action'] = r[2]
-        dic1['words'] = r[3]
-        # res[r[1]] = (r[2],r[3],r[0])
-        # res[r[1]] =  r[3]
-        res.append(dic1)
+        if r[1]:
+            dic1 = {}
+            dic1['name'] = r[1]
+            dic1['action'] = r[2]
+            dic1['words'] = r[3]
+            res.append(dic1)
 
     return res
 

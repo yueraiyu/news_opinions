@@ -48,7 +48,7 @@
               this.$axios.post(path, data)
                 .then((response) => {
                   // handle success
-                  this.content = response.data.content
+                  this.content = response.data.news
                   this.opinions = response.data.opinions
 
                   this.isReadOnly = true
