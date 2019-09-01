@@ -47,7 +47,7 @@ def create_app(config_class=Config):
     dictConfig(logger_config)
 
     # Enable CORS
-    CORS(app)
+    CORS(app, supports_credentials=True)
     # Init Flask-SQLAlchemy
     db.init_app(app)
 
