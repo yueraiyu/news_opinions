@@ -2,7 +2,7 @@ alembic==1.0.11
 boto==2.49.0
 boto3==1.9.213
 botocore==1.12.213
-certifi==2019.6.16
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 colorama==0.4.1
